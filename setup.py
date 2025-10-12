@@ -2597,41 +2597,6 @@ def install_cpp_dist_and_build_test(install_dir, lib_test_dir, headers, libs):
     subprocess.check_call([CMAKE, "--build", lib_test_dir])
 
 
-def check_submodules():
-    def get_submodule_folder():
-        git_submodules_path = os.path.join(TOP_DIR, ".gitmodules")
-        with open(git_submodules_path) as f:
-            return [
-                os.path.join(TOP_DIR, line.split("=", 1)[1].strip())
-                for line in f
-                if line.strip().startswith("path")
-            ]
-
-    def submodules_not_exists_or_empty(folder):
-        return not os.path.exists(folder) or (
-            os.path.isdir(folder) and len(os.listdir(folder)) == 0
-        )
-
-    submodule_folders = get_submodule_folder()
-    # f none of the submodule folders exists, try to initialize them
-    if any(
-        submodules_not_exists_or_empty(folder) for folder in submodule_folders
-    ):
-        try:
-            print(' --- Trying to initialize submodules')
-            start = time.time()
-            subprocess.check_call(
-                ["git", "submodule", "update", "--init", "--recursive"],
-                cwd=TOP_DIR,
-            )
-            end = time.time()
-            print(f' --- Submodule initialization took {end - start:.2f} sec')
-        except Exception:
-            print(' --- Submodule initialization failed')
-            print('Please run:\n\tgit submodule update --init --recursive')
-            sys.exit(1)
-
-
 def generate_stub_files(paddle_binary_dir, paddle_source_dir):
     script_path = paddle_source_dir + '/tools/'
     sys.path.append(script_path)
@@ -2694,7 +2659,6 @@ def main():
 
     # check build dependency
     check_build_dependency()
-    check_submodules()
     # Execute the build process,cmake and make
     if cmake_and_build:
         build_steps()

@@ -4060,7 +4060,6 @@ function build_pr_and_develop() {
             rm -rf ${PADDLE_ROOT}/build/third_party
         fi
         git checkout -b develop_base_pr upstream/$BRANCH
-        git submodule update --init
         run_setup ${PYTHON_ABI:-""} "rerun-cmake bdist_wheel" ${parallel_number}
         rm -rf ${PADDLE_ROOT}/build
         mv /tmp/build ${PADDLE_ROOT}

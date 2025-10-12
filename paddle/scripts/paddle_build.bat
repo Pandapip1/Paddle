@@ -445,20 +445,6 @@ if "%WITH_GPU%"=="ON" (
 
 @ECHO ON
 cd /d %work_dir%
-python -c "import wget;wget.download('https://paddle-windows.bj.bcebos.com/third_party_code/%sub_dir%/%md5%.tar.gz')" 2>nul
-if !ERRORLEVEL! EQU 0 (
-    echo Getting source code of third party : extracting ...
-    tar -xf %md5%.tar.gz
-    del %md5%.tar.gz
-    if !errorlevel! EQU 0 (
-        echo Getting source code of third party : successful
-    )
-) else (
-    git submodule update --init --recursive
-    if !errorlevel! EQU 0 (
-        set UPLOAD_TP_CODE=ON
-    )
-)
 if "%UPLOAD_TP_CODE%"=="ON" (
     set BCE_FILE=%cache_dir%\bce-python-sdk-new\BosClient.py
     echo Uploading source code of third_party: checking bce ...

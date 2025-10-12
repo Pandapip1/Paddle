@@ -141,6 +141,20 @@ jobs:
           bash ci/git_pull.sh $BRANCH
           '
 
+      - name: Install system dependencies
+        run: |
+          docker exec -t ${{ env.container_name }} /bin/bash -c '
+          echo "::group::Installing system dependencies"
+          apt-get update
+          apt-get install -y \
+            libgflags-dev libgoogle-glog-dev libprotobuf-dev protobuf-compiler \
+            libeigen3-dev libnlohmann-json-dev libyaml-cpp-dev libgtest-dev \
+            libblas-dev liblapack-dev libopenblas-dev zlib1g-dev \
+            libcudnn8-dev libcudnn8 libnccl-dev \
+            cmake build-essential ninja-build
+          echo "::endgroup::"
+          '
+
       - name: Check bypass
         id: check-bypass
         uses: ./.github/actions/check-bypass
@@ -153,7 +167,7 @@ jobs:
         run: |
           docker exec -t ${{ env.container_name }} /bin/bash -c '
           set +e
-          flashattn_version=$(git submodule status | grep flashattn | awk "{print \$1}" | sed "s#-##g")
+          flashattn_version=TODO_VERSION
           echo "flashattn_version=${flashattn_version}" >> ${{ github.env }}
           wget -q --tries=5 --no-proxy https://paddle-github-action.bj.bcebos.com/PR/gpups/flashattn_cache/flashattn_libs_${flashattn_version}.tar.gz --no-check-certificate; FACODE=$?
           if [ $FACODE -ne 0 ]; then
@@ -166,7 +180,6 @@ jobs:
         run: |
           docker exec -t ${{ env.container_name }} /bin/bash -c '
           source ${{ github.workspace }}/../../../proxy
-          bash ${ci_scripts}/cmake-predownload.sh
           bash ${ci_scripts}/run_setup.sh bdist_wheel
           '
 
@@ -321,6 +334,20 @@ jobs:
           tar --use-compress-program="pzstd" -xf Paddle.tar.gz --strip-components=1
           rm Paddle.tar.gz
           git checkout test
+          '
+
+      - name: Install system dependencies
+        run: |
+          docker exec -t ${{ env.container_name }} /bin/bash -c '
+          echo "::group::Installing system dependencies"
+          apt-get update
+          apt-get install -y \
+            libgflags-dev libgoogle-glog-dev libprotobuf-dev protobuf-compiler \
+            libeigen3-dev libnlohmann-json-dev libyaml-cpp-dev libgtest-dev \
+            libblas-dev liblapack-dev libopenblas-dev zlib1g-dev \
+            libcudnn8-dev libcudnn8 libnccl-dev \
+            cmake build-essential ninja-build
+          echo "::endgroup::"
           '
 
       - name: Test

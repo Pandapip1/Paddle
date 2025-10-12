@@ -156,7 +156,6 @@ jobs:
           git remote add upstream https://github.com/PaddlePaddle/Paddle.git
           set -e
           git checkout test
-          git submodule update --init --recursive
           echo "Pull upstream $BRANCH"
           bash ci/git_pull.sh $BRANCH
           '
@@ -166,7 +165,6 @@ jobs:
           docker exec -t ${{ env.container_name }}  /bin/bash -c '
           mkdir -p ${CFS_DIR}/.cache/coverage
           mkdir -p ${CFS_DIR}/.ccache/coverage
-          bash ${ci_scripts}/cmake-predownload.sh
           bash $ci_scripts/coverage_build.sh bdist_wheel
           '
 

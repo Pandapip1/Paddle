@@ -100,7 +100,7 @@ jobs:
           tar --use-compress-program="pzstd -1" -xpf build.tar.gz
           rm build.tar.gz
           git config --global --add safe.directory ${work_dir}
-          cd paddle && git submodule foreach "git config --global --add safe.directory \$toplevel/\$sm_path"
+          cd paddle
           source ${ci_scripts}/model_benchmark.sh
           check_paddle ${{ github.env }}
           '

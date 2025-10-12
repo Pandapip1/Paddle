@@ -72,7 +72,7 @@ option(WITH_PIP_TENSORRT "Paddle uses the tensorrt provided by NVIDIA" OFF)
 option(WITH_NIGHTLY_BUILD
        "Compile nightly paddle whl package of the develop branch" OFF)
 option(WITH_CPP_TEST "Compile PaddlePaddle skip cpp test" ON)
-find_package(Git REQUIRED)
+find_package(Git QUIET)
 
 # config GIT_URL with github mirrors to speed up dependent repos clone
 option(GIT_URL "Git URL to clone dependent repos" ${GIT_URL})
@@ -572,8 +572,7 @@ if(WITH_MPI)
   include(mpi)
 endif()
 
-include(third_party
-)# download, build, install third_party, Contains about 20+ dependencies
+include(dependencies)
 
 include(flags) # set paddle compile flags
 include(util) # set unittest and link libs

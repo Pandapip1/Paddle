@@ -99,7 +99,6 @@ jobs:
           echo "Extracting PaddleTest"
           git config --global --add safe.directory ${work_dir}
           tar -xzf PaddleTest.tar.gz && cd PaddleTest
-          git submodule foreach "git config --global --add safe.directory \$toplevel/\$sm_path"
           '
 
       - name: Test

@@ -154,8 +154,6 @@ if !ERRORLEVEL! EQU 0 (
         echo Getting source code of third party : successful
     )
 ) else (
-    git config -f .gitmodules submodule.third_party/openvino.update none && git submodule sync third_party/openvino
-    git submodule update --init --recursive
     if !errorlevel! EQU 0 (
         set UPLOAD_TP_CODE=ON
     )

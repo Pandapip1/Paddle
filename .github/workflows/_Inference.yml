@@ -138,11 +138,24 @@ jobs:
           bash ci/git_pull.sh $BRANCH
           '
 
+      - name: Install system dependencies
+        run: |
+          docker exec -t ${{ env.container_name }} /bin/bash -c '
+          echo "::group::Installing system dependencies"
+          apt-get update
+          apt-get install -y \
+            libgflags-dev libgoogle-glog-dev libprotobuf-dev protobuf-compiler \
+            libeigen3-dev libnlohmann-json-dev libyaml-cpp-dev libgtest-dev \
+            libblas-dev liblapack-dev libopenblas-dev zlib1g-dev \
+            libcudnn8-dev libcudnn8 libnccl-dev \
+            cmake build-essential ninja-build
+          echo "::endgroup::"
+          '
+
       - name: Run build
         run: |
           docker exec -t ${container_name} /bin/bash -c '
           source /action-runner/proxy
-          bash ${ci_scripts}/cmake-predownload.sh
           bash ${ci_scripts}/inference_build.sh
           EXCODE=$?
           exit $EXCODE

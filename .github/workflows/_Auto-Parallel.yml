@@ -96,7 +96,6 @@ jobs:
           source ${{ github.workspace }}/../../../proxy
           cd PaddleNLP
           git pull
-          git submodule update --init --recursive --force
           '
 
       - name: Test

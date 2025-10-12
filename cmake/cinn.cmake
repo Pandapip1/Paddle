@@ -1,6 +1,5 @@
-set(CINN_THIRD_PARTY_PATH "${CMAKE_BINARY_DIR}/third_party")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(DOWNLOAD_MODEL_DIR "${CINN_THIRD_PARTY_PATH}/model")
+set(DOWNLOAD_MODEL_DIR "${CMAKE_BINARY_DIR}/cinn_model")
 
 string(REGEX MATCH "-std=(c\\+\\+[^ ]+)" STD_FLAG "${CMAKE_CXX_FLAGS}")
 if(NOT STD_FLAG)
@@ -306,8 +305,8 @@ if(PUBLISH_LIBS)
     POST_BUILD
     COMMAND cmake -E copy ${CMAKE_BINARY_DIR}/libcinnapi.so
             ${CMAKE_BINARY_DIR}/dist/cinn/lib/libcinnapi.so
-    COMMAND cmake -E copy_directory ${CINN_THIRD_PARTY_PATH}/install
-            ${CMAKE_BINARY_DIR}/dist/third_party DEPENDS cinnapi)
+    # No longer copying third_party dependencies - using system packages
+    DEPENDS cinnapi)
   add_custom_command(
     TARGET cinncore_static
     POST_BUILD

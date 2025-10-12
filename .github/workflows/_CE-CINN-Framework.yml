@@ -75,7 +75,6 @@ jobs:
           echo "Extracting build.tar.gz"
           git config --global --add safe.directory ${work_dir}
           tar --use-compress-program="pzstd -1" -xpf build.tar.gz --strip-components=1
-          git submodule foreach "git config --global --add safe.directory \$toplevel/\$sm_path"
           git checkout test
           rm build.tar.gz
           cd /

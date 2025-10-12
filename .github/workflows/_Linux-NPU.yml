@@ -91,7 +91,6 @@ jobs:
           USE_910B: 1
           FLAGS_set_to_1d: "False"
           NVIDIA_TF32_OVERRIDE: 0
-          paddle_submodule: "ON"
           MC2: 1
           HCCL_OP_BASE_FFTS_MODE_ENABLE: "TRUE"
           PADDLE_XCCL_BACKEND: npu
@@ -133,7 +132,6 @@ jobs:
             -e USE_910B \
             -e FLAGS_set_to_1d \
             -e NVIDIA_TF32_OVERRIDE \
-            -e paddle_submodule \
             -e MC2 \
             -e HCCL_OP_BASE_FFTS_MODE_ENABLE \
             -e PADDLE_XCCL_BACKEND \
@@ -181,9 +179,6 @@ jobs:
           pip install -U numpy==1.26.4
           git config --global --add safe.directory ${work_dir}
           git config --global --add safe.directory ${work_dir}/Paddle
-          cd Paddle
-          git submodule foreach "git config --global --add safe.directory \$toplevel/\$sm_path"
-          cd ..
           bash backends/npu/tools/pr_ci_npu.sh
           '
 

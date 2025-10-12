@@ -117,7 +117,6 @@ jobs:
           echo "Extracting PaddleTest.tar.gz"
           # git config --global --add safe.directory ${work_dir}
           tar -zvxf PaddleTest.tar.gz 1>/dev/null 2>&1
-          # git submodule foreach "git config --global --add safe.directory \$toplevel/\$sm_path"
           source ${{ github.workspace }}/../../../proxy
           mkdir -p ${{ github.workspace }}/../../../pip
           ${python} -m pip config set global.cache-dir ${{ github.workspace }}/../../../pip

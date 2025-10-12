@@ -369,7 +369,6 @@ if [[ "$CI_name" == "build" && "$is_pr" == "true" ]]; then
             rm -rf ${PADDLE_ROOT}/build/third_party
         fi
         git checkout $BRANCH
-        git submodule update --init
         run_setup "rerun-cmake bdist_wheel"
         rm -rf ${PADDLE_ROOT}/build
         mv /tmp/build ${PADDLE_ROOT}
