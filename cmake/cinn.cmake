@@ -305,7 +305,6 @@ if(PUBLISH_LIBS)
     POST_BUILD
     COMMAND cmake -E copy ${CMAKE_BINARY_DIR}/libcinnapi.so
             ${CMAKE_BINARY_DIR}/dist/cinn/lib/libcinnapi.so
-    # No longer copying third_party dependencies - using system packages
     DEPENDS cinnapi)
   add_custom_command(
     TARGET cinncore_static

@@ -217,7 +217,6 @@ jobs:
           fi
           cd /paddle/build/paddle
           ls | grep -v cinn | xargs rm -rf
-          # No more third_party directory to remove - using system packages
           rm -rf /paddle/build/dist
           cd /
           tar --use-compress-program="pzstd -1" -cf build.tar.gz paddle
